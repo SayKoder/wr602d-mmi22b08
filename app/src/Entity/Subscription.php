@@ -107,7 +107,7 @@ class Subscription
 
     public function setSpecialPriceFrom(?\DateTimeInterface $specialPriceFrom): static
     {
-        $this->special_price_from = $specialPriceFrom;
+        $this->specialPriceFrom = $specialPriceFrom;
 
         return $this;
     }

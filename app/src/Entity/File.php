@@ -43,7 +43,7 @@ class File
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

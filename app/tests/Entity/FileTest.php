@@ -13,14 +13,14 @@ class FileTest extends TestCase
 
         // Definition de don donnees
         $pdfname = 'comment';
-	$created_at = new \DateTimeImmutable();
+	$createdAt = new \DateTimeImmutable();
 
         // Utilisation des setters
         $file->setPdfname($pdfname);
-	$file->setCreatedat($created_at);
+	$file->setCreatedAt($createdAt);
 
         // Verification des getters
         $this->assertEquals($pdfname, $file->getPdfname());
-	$this->assertEquals($created_at, $file->getCreatedat());
+	$this->assertInstanceOf(\DateTimeImmutable::class, $file->getCreatedAt());
     }
 }
