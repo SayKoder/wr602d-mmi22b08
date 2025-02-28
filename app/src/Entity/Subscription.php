@@ -27,13 +27,13 @@ class Subscription
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $special_price = null;
+    private ?float $specialPrice = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $special_price_from = null;
+    private ?\DateTimeInterface $specialPriceFrom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $special_price_to = null;
+    private ?\DateTimeInterface $specialPriceTo = null;
 
     public function getId(): ?int
     {
@@ -90,36 +90,36 @@ class Subscription
 
     public function getSpecialPrice(): ?float
     {
-        return $this->special_price;
+        return $this->specialPrice;
     }
 
-    public function setSpecialPrice(?float $special_price): static
+    public function setSpecialPrice(?float $specialPrice): static
     {
-        $this->special_price = $special_price;
+        $this->specialPrice = $specialPrice;
 
         return $this;
     }
 
     public function getSpecialPriceFrom(): ?\DateTimeInterface
     {
-        return $this->special_price_from;
+        return $this->specialPriceFrom;
     }
 
-    public function setSpecialPriceFrom(?\DateTimeInterface $special_price_from): static
+    public function setSpecialPriceFrom(?\DateTimeInterface $specialPriceFrom): static
     {
-        $this->special_price_from = $special_price_from;
+        $this->specialPriceFrom = $specialPriceFrom;
 
         return $this;
     }
 
     public function getSpecialPriceTo(): ?\DateTimeInterface
     {
-        return $this->special_price_to;
+        return $this->specialPriceTo;
     }
 
-    public function setSpecialPriceTo(?\DateTimeInterface $special_price_to): static
+    public function setSpecialPriceTo(?\DateTimeInterface $specialPriceTo): static
     {
-        $this->special_price_to = $special_price_to;
+        $this->specialPriceTo = $specialPriceTo;
 
         return $this;
     }
