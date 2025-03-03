@@ -17,10 +17,19 @@ final class PdfController extends AbstractController
     }
 
     #[Route('/generate-pdf', name: 'generate_pdf')]
-    public function generatePdf(): Response
+    public function generatePdfFromUrl(): Response
     {
-        $htmlContent = '<h1>Mon PDF</h1><p>Ceci est un test</p>';
+        $html = '<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My PDF</title>
+  </head>
+  <body>
+    <h1>Guillaume le thug</h1>
+  </body>
+</html>';
 
-        return $this->pdfGenerator->generatePdf($htmlContent);
+        return $this->pdfGenerator->generatePdfFromUrl($html);
     }
 }
