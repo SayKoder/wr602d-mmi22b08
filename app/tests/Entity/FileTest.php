@@ -21,6 +21,6 @@ class FileTest extends TestCase
 
         // Verification des getters
         $this->assertEquals($pdfname, $file->getPdfname());
-	$this->assertInstanceOf(\DateTimeImmutable::class, $file->getCreatedAt());D
+	$this->assertInstanceOf(\DateTimeImmutable::class, $file->getCreatedAt());
     }
 }
