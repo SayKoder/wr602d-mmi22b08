@@ -7,40 +7,38 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PdfGeneratorService
 {
-    private HttpClientInterface $client;
+    private HttpClientInterface $httpClient;
     private string $gotenbergUrl;
 
-    public function __construct(HttpClientInterface $client, string $gotenbergUrl)
+    public function __construct(HttpClientInterface $httpClient, string $gotenbergUrl)
     {
-        $this->client = $client;
+        $this->httpClient = $httpClient;
         $this->gotenbergUrl = $gotenbergUrl;
     }
 
-    public function generatePdfFromUrl(string $html): Response
+    public function generatePdf(string $htmlContent): Response
     {
-        
-       try {
+    
+        file_put_contents('/var/www/wr602d-mmi22b08/app/public/index.html', $htmlContent);
 
-        file_put_contents('/var/www/wr602d-mmi22b08/app/public/index.html', $html);
+    $response = $this->httpClient->request('POST', $this->gotenbergUrl . 'forms/chromium/convert/html', [
+            'headers' => [
+                'Content-Type' => 'multipart/form-data'
+            ],
+            'body' => [
+                'files' => [
+                    'index.html' => fopen('/var/www/wr602d-mmi22b08/app/public/index.html', 'r')
+                ]
+            ]
+        ]);
 
-		$response = $this->client->request('POST', $this->gotenbergUrl . 'forms/chromium/convert/html', [
-                'headers' => [	'Content-Type'=>'multipart/form-data'],    
-                'body' => [
+        if ($response->getStatusCode() !== 200) {
+            throw new \Exception('Erreur lors de la generation du PDF: ' . $response->getContent());
+        }
 
-                    'index.html' => fopen('/var/www/wr602d-mmi22b08/app/public/index.html', 'r'),
-                ],
-            ]);
-
-
-            if ($response->getStatusCode() !== 200) {
-                throw new \Exception('Error generating PDF: ' . $response->getContent());
-	    }
-
-            return new Response($response->getContent(), 200, [
-                'Content-Type' => 'application/pdf',
-            ]); 
-    } catch (\Exception $e) {
-        dd($e->getMessage());
-	}
-   }
+        return new Response($response->getContent(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="document.pdf"',
+        ]);
+    }
 }
