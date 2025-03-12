@@ -2,35 +2,59 @@
 
 namespace App\Controller;
 
-use App\Service\PdfGeneratorService;
+use App\Service\PdfGeneratorService; // Importez votre service ici
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
-final class PdfController extends AbstractController
+class PdfController extends AbstractController
 {
-    private PdfGeneratorService $pdfGenerator;
+    private $pdfService;
 
-    public function __construct(PdfGeneratorService $pdfGenerator)
+    public function __construct(PdfGeneratorService $pdfService)
     {
-        $this->pdfGenerator = $pdfGenerator;
+        $this->pdfService = $pdfService;
     }
 
     #[Route('/generate-pdf', name: 'generate_pdf')]
-    public function generatePdf(): Response
+    public function generatePdf(Request $request): Response
     {
-        $html = '<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>My PDF</title>
-  </head>
-  <body>
-    <h1>Guillaume le thug</h1>
-  </body>
-</html>';
+        // Créer le formulaire avec un champ URL et un bouton submit
+        $form = $this->createFormBuilder()
+            ->add('url', UrlType::class, [
+                'required' => true,
+                'label' => 'Entrez l\'URL'
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Générer le PDF'
+            ])
+            ->getForm();
 
-        return $this->pdfGenerator->generatePdf($html);
+        // Gérer la soumission du formulaire
+        $form->handleRequest($request);
+
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer l'URL saisie à partir des données du formulaire
+            $url = $form->getData()['url'];
+
+            // Faites appel à votre service pour générer le PDF
+            $pdf = $this->pdfService->convertUrlToPdf($url);
+
+            // Retourner le PDF en réponse HTTP
+            return new Response($pdf, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="generated.pdf"',
+            ]);
+        }
+
+
+        // Afficher le formulaire
+        return $this->render('generate_pdf/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

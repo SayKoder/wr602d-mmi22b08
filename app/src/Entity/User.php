@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +42,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $role = null;
+
+    #[ORM\ManyToOne(targetEntity: Subscription::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Subscription $subscription = null;
+
+    #[ORM\ManyToMany(targetEntity: File::class)]
+    #[ORM\JoinTable(name: "user_files")]
+    private Collection $files;
+
+    public function __construct()
+    {
+        $this->files = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,5 +165,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->role = $role;
 
         return $this;
+    }
+
+    public function getSubscription(): ?Subscription 
+    { 
+        return $this->subscription; 
+    }
+
+    public function setSubscription(?Subscription $subscription): static 
+    { 
+        $this->subscription = $subscription; 
+        return $this; 
+    }
+
+    public function getFiles(): Collection 
+    { 
+        return $this->files; 
+    }
+
+    public function addFile(File $file): static 
+    { 
+        if (!$this->files->contains($file)) 
+        { 
+            $this->files->add($file); 
+        } 
+        
+        return $this; 
+    }
+    public function removeFile(File $file): static 
+    { 
+        $this->files->removeElement($file); 
+        return $this; 
     }
 }

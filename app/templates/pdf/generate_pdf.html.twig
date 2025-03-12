@@ -5,11 +5,10 @@
 {% block title %}Generate PDF{% endblock %}
 
 {% block body %}
-    <h1>Generate PDF</h1>
-
-    <form method="post" action="{{ path('generate_pdf') }}">
-        <label for="url">URL:</label>
-        <input type="text" id="url" name="url" required />
-        <button type="submit">Generate PDF</button>
-    </form>
+    <h1>Générer un PDF</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Générer</button>
+    {{ form_end(form) }}
+    
 {% endblock %}
