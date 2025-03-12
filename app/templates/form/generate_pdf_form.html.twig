@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Generate PDF Form{% endblock %}
+
+{% block body %}
+    <h1>Generate PDF</h1>
+    <form action="{{ path('generate_pdf') }}" method="post">
+        <label for="content">Content:</label>
+        <input type="text" id="content" name="content" required>
+        <button type="submit">Generate PDF</button>
+    </form>
+{% endblock %}

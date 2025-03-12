@@ -51,6 +51,7 @@ class PdfController extends AbstractController
             ]);
         }
 
+
         // Afficher le formulaire
         return $this->render('generate_pdf/index.html.twig', [
             'form' => $form->createView(),
