@@ -3,42 +3,55 @@
 namespace App\Service;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class PdfGeneratorService
 {
-    private HttpClientInterface $httpClient;
     private string $gotenbergUrl;
+    private HttpClientInterface $client;
 
-    public function __construct(HttpClientInterface $httpClient, string $gotenbergUrl)
+    public function __construct(HttpClientInterface $client, string $gotenbergUrl)
     {
-        $this->httpClient = $httpClient;
+        $this->client = $client;
         $this->gotenbergUrl = $gotenbergUrl;
     }
 
-    public function generatePdf(string $htmlContent): Response
-    {
-    
-        file_put_contents('/var/www/wr602d-mmi22b08/app/public/index.html', $htmlContent);
 
-    $response = $this->httpClient->request('POST', $this->gotenbergUrl . 'forms/chromium/convert/html', [
+    public function convertUrlToPdf(string $url): string
+    {
+        $response = $this->client->request('POST', $this->gotenbergUrl . 'forms/chromium/convert/url', [
             'headers' => [
-                'Content-Type' => 'multipart/form-data'
+                'Content-Type' => 'multipart/form-data',
             ],
             'body' => [
-                'files' => [
-                    'index.html' => fopen('/var/www/wr602d-mmi22b08/app/public/index.html', 'r')
-                ]
-            ]
+                'url' => $url, 
+            ],
         ]);
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception('Erreur lors de la generation du PDF: ' . $response->getContent());
-        }
+        return $response->getContent();
+    }
 
-        return new Response($response->getContent(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="document.pdf"',
+
+    public function convertHtmlToPdf(string $htmltopdfContent): string
+    {
+        // Définir un chemin temporaire pour stocker le fichier HTML
+        $tempHtmlPath = '/var/www/WR602D_mmi22g09/public/index.html';
+
+        // Sauvegarder le HTML dans un fichier temporaire
+        file_put_contents($tempHtmlPath, $htmltopdfContent);
+
+        // Envoyer la requête à Gotenberg
+        $response = $this->client->request('POST', $this->gotenbergUrl . 'forms/chromium/convert/html', [
+            'headers' => [
+                'Content-Type' => 'multipart/form-data',
+            ],
+            'body' => [
+                'files' => ['index.html' => fopen($tempHtmlPath, 'r')],
+            ],
         ]);
+
+        // Supprimer le fichier temporaire après utilisation
+        unlink($tempHtmlPath);
+
+        return $response->getContent();
     }
 }

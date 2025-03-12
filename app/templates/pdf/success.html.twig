@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PDF Généré{% endblock %}
+
+{% block body %}
+    <h1>PDF Généré avec succès</h1>
+    <p>Votre PDF a été généré avec succès. Vous pouvez le télécharger en cliquant sur le lien ci-dessous :</p>
+    <a href="{{ pdfFilePath }}" class="btn btn-primary">Télécharger le PDF</a>
+{% endblock %}

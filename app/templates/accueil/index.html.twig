@@ -3,8 +3,11 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>Accueil</h1>
-    <p>Bienvenue sur Kevinitator</p>
-    <p>Vous pouvez générer un PDF en cliquant sur le lien ci-dessous:</p>
-
+    <h1>Kévinitator générateur de PDF</h1>
+    <div class="centered-content">
+        <p>La vie est dur ? <a href="{{ path('generate_pdf') }}">Génère un pdf. </a><br>
+            Papa est parti à la naissance ? <a href="{{ path('generate_pdf') }}">Génère un pdf. </a><br> 
+            Mamie est morte ? <a href="{{ path('generate_pdf') }}">Génère un pdf ! </a></p>
+        <p>Vous pouvez générer votre pdf gratuitement ou avec un abonnement, selon vos envies !</p>
+    </div>
 {% endblock %}

@@ -2,27 +2,35 @@
 
 namespace App\Controller;
 
-use App\Service\PdfGeneratorService;
+use App\Service\PdfGeneratorService; // Importez votre service ici
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
-final class PdfController extends AbstractController
+class PdfController extends AbstractController
 {
-    private PdfGeneratorService $pdfGenerator;
+    private $pdfService;
 
-    public function __construct(PdfGeneratorService $pdfGenerator)
+    public function __construct(PdfGeneratorService $pdfService)
     {
-        $this->pdfGenerator = $pdfGenerator;
+        $this->pdfService = $pdfService;
     }
 
     #[Route('/generate-pdf', name: 'generate_pdf')]
-    public function generatePdf(): Response
+    public function generatePdf(Request $request): Response
     {
-        // Créer le formulaire
+        // Créer le formulaire avec un champ URL et un bouton submit
         $form = $this->createFormBuilder()
-            ->add('url', null, ['required' => true])
+            ->add('url', UrlType::class, [
+                'required' => true,
+                'label' => 'Entrez l\'URL'
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Générer le PDF'
+            ])
             ->getForm();
 
         // Gérer la soumission du formulaire
@@ -34,13 +42,18 @@ final class PdfController extends AbstractController
             $url = $form->getData()['url'];
 
             // Faites appel à votre service pour générer le PDF
-            $pdf = $this->pdfService->generatePdfFromUrl($url);
+            $pdf = $this->pdfService->convertUrlToPdf($url);
 
-            // Rediriger ou afficher une réponse appropriée
-            // Par exemple, rediriger vers une page de confirmation
-            return $this->redirectToRoute('pdf_generated_success');
+            // Retourner le PDF en réponse HTTP
+            return new Response($pdf, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="generated.pdf"',
+            ]);
         }
 
-        return $this->pdfGenerator->generatePdf($html);
+        // Afficher le formulaire
+        return $this->render('generate_pdf/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
