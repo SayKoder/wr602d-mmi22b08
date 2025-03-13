@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choix de l'abonnement{% endblock %}
+
+{% block body %}
+    <h1>Choisissez votre abonnement</h1>
+
+    {{ form_start(subscriptionForm) }}
+        {{ form_widget(subscriptionForm) }}
+        <button type="submit">Valider</button>
+    {{ form_end(subscriptionForm) }}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+{% endblock %}
