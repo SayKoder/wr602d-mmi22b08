@@ -73,8 +73,7 @@ class RegistrationFormType extends AbstractType
                 'class' => Subscription::class,
                 'choice_label' => 'name',
                 'expanded' => true,
-                'multiple' => false,
-                'label' => 'Subscription'
+                'multiple' => false
             ])
         ;
     }
