@@ -1,20 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SubscriptionController!{% endblock %}
+{% block title %}Abonnement{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/wr602d-mmi22b08/app/src/Controller/SubscriptionController.php</code></li>
-        <li>Your template at <code>/var/www/wr602d-mmi22b08/app/templates/subscription/index.html.twig</code></li>
-    </ul>
-</div>
+<h1>Abonnement</h1>
+    <div class="subscription-container">
+        {% for subscription in subscriptions %}
+            <div class="subscription-card">
+                <h2>{{ subscription.nom }}</h2>
+                <p>{{ subscription.description }}</p>
+                <p>Prix : {{ subscription.price }} €</p>
+                <p>PDF max par jour : {{ subscription.pdfmax is not null ? subscription.pdfmax : 'Illimité' }}</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

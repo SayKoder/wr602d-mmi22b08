@@ -164,6 +164,36 @@ p {
     background-color: #ee7752;
 }
 
+/* --- ABONNEMENT --- */
+.subscription-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.subscription-card {
+    background-color: #2f2f2f;
+    border: 2px solid #ee7752;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    color: white;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.subscription-card h2 {
+    margin-bottom: 10px;
+}
+
+.subscription-card p {
+    margin: 10px 0;
+}
+
 /* --- FOOTER --- */
 
 .footer-basic {
