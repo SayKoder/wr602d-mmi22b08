@@ -24,7 +24,7 @@ class SubscriptionFixtures extends Fixture
             ],
             [
                 'nom' => 'Golden',
-                'pdfmax' => 1000,
+                'pdfmax' => null,
                 'price' => 24.99,
                 'description' => "Forfait Golden vous offrant une génération illimité de PDF pour un prix concurrent !"
             ]

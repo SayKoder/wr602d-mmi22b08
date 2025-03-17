@@ -19,7 +19,7 @@ class Subscription
     #[ORM\Column(length: 32, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $pdfmax = null;
 
     #[ORM\Column]
