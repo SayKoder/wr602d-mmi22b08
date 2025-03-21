@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $role = 'ROLE_USER';
 
     #[ORM\ManyToOne(targetEntity: Subscription::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Subscription $subscription = null;
 
     #[ORM\ManyToMany(targetEntity: File::class)]

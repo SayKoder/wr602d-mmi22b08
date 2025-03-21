@@ -8,6 +8,7 @@
     <p>Email: {{ user.email }}</p>
     <p>Prénom: {{ user.firstname }}</p>
     <p>Nom: {{ user.lastname }}</p>
+    <p>Abonnement: {{ user.subscription.nom }}  <a href="{{ path('app_subscription') }}" >Changer son abonnement</a></p>
     <a href="{{ path('app_logout') }}" class="btn">Déconnexion</a>
     <a href="#" class="btn">Supprimer son compte</a>
 </div>

@@ -25,7 +25,7 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter an email',
+                        'message' => 'Entrez un email',
                     ]),
                 ],
             ])
@@ -33,24 +33,24 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Veuillez acceptez nos termes.',
                     ]),
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-                'invalid_message' => 'The password fields must match.',
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Répétez le mot de passe'],
+                'invalid_message' => 'Les mots de passe doivent correspondre.',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Entrez un mot de passe',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit être de plus de 8 caractères.',
                         'max' => 4096,
                     ]),
                 ],
@@ -58,20 +58,20 @@ class RegistrationFormType extends AbstractType
             ->add('firstname', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your first name',
+                        'message' => 'Entrez votre prénom',
                     ]),
                 ],
             ])
             ->add('lastname', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your last name',
+                        'message' => 'Entrez votre nom de famille',
                     ]),
                 ],
             ])
             ->add('subscription', EntityType::class, [
                 'class' => Subscription::class,
-                'choice_label' => 'name',
+                'choice_label' => 'nom',
                 'expanded' => true,
                 'multiple' => false
             ])

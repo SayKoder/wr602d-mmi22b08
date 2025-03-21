@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\SubscriptionRepository;
@@ -67,19 +66,19 @@ class Subscription
         return $this->pdfmax;
     }
 
-    public function setPdfmax(int $pdfmax): static
+    public function setPdfmax(?int $pdfmax): static
     {
         $this->pdfmax = $pdfmax;
 
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
