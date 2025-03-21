@@ -59,6 +59,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: "user_files")]
     private Collection $files;
 
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private int $pdfCount = 0;
+
     #[ORM\Column]
     private bool $isVerified = false;
 
@@ -94,6 +97,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->plainPassword = $plainPassword;
 
         return $this;
+    }
+
+    public function getPdfCount(): int
+    {
+        return $this->pdfCount;
+    }
+
+    public function setPdfCount(int $pdfCount): self
+    {
+        $this->pdfCount = $pdfCount;
+
+        return $this;
+    }
+
+    public function incrementPdfCount(): void
+    {
+        $this->pdfCount++;
+
+    }
+
+    public function resetPdfCount(): void
+    {
+        $this->pdfCount = 0;
     }
 
     /**

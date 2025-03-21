@@ -7,6 +7,27 @@
 {% block body %}
     <h1>Générer un PDF à partir d'une URL</h1>
 
+    {# Afficher les messages d'erreur ou de succès #}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    {% if pdfmax is not null %}
+        <div class="progress mt-3">
+            <div class="progress-bar 
+                {% if currentPdfCount >=  pdfmax %}bg-danger{% else %}bg-success{% endif %}" 
+                role="progressbar" 
+                style="width: {{ (currentPdfCount / pdfmax) * 100 }}%;" 
+                aria-valuenow="{{ currentPdfCount }}" 
+                aria-valuemin="0" 
+                aria-valuemax="{{ pdfmax }}">
+                {{ currentPdfCount }}/{{ pdfmax }}
+            </div>
+        </div>
+    {% else %}
+        <p class="text-success">PDF illimité 🎉</p>
+    {% endif %}
+
     {{ form_start(form, { 'attr': { 'data-turbo': "false" } }) }}
     {{ form_row(form.url) }}
     {{ form_widget(form.submit) }}
