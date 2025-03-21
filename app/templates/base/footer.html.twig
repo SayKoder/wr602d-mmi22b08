@@ -5,13 +5,18 @@
 <footer>
     <div class="footer-basic">
         <footer>
-            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Home</a></li>
-                <li class="list-inline-item"><a href="#">Services</a></li>
-                <li class="list-inline-item"><a href="#">About</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                {% if app.user %}
+                    <li class="list-inline-item"><a href="{{ path('accueil') }}">Accueil</a></li>
+                    <li class="list-inline-item"><a href="{{ path('app_subscription') }}">Abonnement</a></li>
+                    <li class="list-inline-item"><a href="{{ path('app_historique') }}">Historique</a></li>
+                    <li class="list-inline-item"><a href="#">Confidentialité</a></li>
+                    <li class="list-inline-item"><a href="{{ path('app_profil') }}">Profil</a></li>
+                {% else %}
+                    <li class="list-inline-item"><a href="{{ path('accueil') }}">Accueil</a></li>
+                    <li class="list-inline-item"><a href="{{ path('app_login') }}">Connectez-vous</a></li>
+                    <li class="list-inline-item"><a href="#">Confidentialité</a></li>
+                {% endif %}
             </ul>
             <p class="copyright">Une production signé CallGuiKev</p>
         </footer>

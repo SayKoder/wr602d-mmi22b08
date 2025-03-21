@@ -16,9 +16,9 @@ class SubscriptionType extends AbstractType
         $builder
             ->add('subscription', EntityType::class, [
                 'class' => Subscription::class,
-                'choice_label' => 'name', // Assure-toi que `name` existe bien dans Subscription
-                'expanded' => true,  // Affiche sous forme de boutons radio
-                'multiple' => false, // ⚠️ Doit être `false` car `subscription` est une seule entité
+                'choice_label' => 'nom', 
+                'expanded' => true,  
+                'multiple' => false,
                 'required' => true,
             ])
             ->add('submit', SubmitType::class, [
