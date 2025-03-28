@@ -28,9 +28,23 @@
             <div class="form-group">
                 {{ form_row(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}, 'label': 'Repeat Password'}) }}
             </div>
+
+            <!-- Ajout du choix de l'abonnement -->
+            <div class="form-group">
+                <label class="form-label">Choisissez un abonnement :</label>
+                {% for choice in registrationForm.subscription %}
+                    <div class="form-check">
+                        {{ form_widget(choice, { 'attr': {'class': 'form-check-input'} }) }}
+                        {{ form_label(choice, null, { 'label_attr': {'class': 'form-check-label'} }) }}
+                    </div>
+                {% endfor %}
+                {{ form_errors(registrationForm.subscription) }}
+            </div>
+
             <div class="form-group form-check">
                 {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
             </div>
+
             <button type="submit" class="btn btn-primary btn-block">Register</button>
         {{ form_end(registrationForm) }}
     </div>
