@@ -18,7 +18,7 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     {% if app.user %}
                                         <a class="dropdown-item" href="{{ path('generate_pdf') }}">Générer un pdf</a>
-                                        <a class="dropdown-item" href="{{ path('app_historique') }}">Historique</a>
+                                        <a class="dropdown-item" href="{{ path('historique') }}">Historique</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ path('app_subscription') }}">Abonnement</a>
                                     {% else %}

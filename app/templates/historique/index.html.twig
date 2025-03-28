@@ -1,7 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HistoriqueController!{% endblock %}
+{% block title %}Historique des PDF{% endblock %}
 
 {% block body %}
-
+    <h1>Historique de vos PDFs générés</h1>
+    
+    {% if files|length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom du fichier</th>
+                    <th>Date de génération</th>
+                    <th>Télécharger</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                    <tr>
+                        <td>{{ file.pdfname }}</td>
+                        <td>{{ file.createdAt|date('d/m/Y H:i') }}</td>
+                        <td>
+                           <a href="{{ asset('uploads/pdf/' ~ file.pdfname) }}" class="btn btn-primary" target="_blank">Télécharger</a>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun PDF généré.</p>
+    {% endif %}
 {% endblock %}

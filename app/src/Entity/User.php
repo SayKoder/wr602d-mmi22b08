@@ -229,14 +229,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getFiles(): Collection 
     { 
-        return $this->files; 
+        return $this->files;
     }
 
     public function addFile(File $file): static 
     { 
-        if (!$this->files->contains($file)) 
+        if (!$this->files->contains($file))
         { 
-            $this->files->add($file); 
+            $this->files->add($file);
         } 
         
         return $this; 
