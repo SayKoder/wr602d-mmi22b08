@@ -18,6 +18,9 @@ class File
     #[ORM\Column(length: 255)]
     private ?string $pdfname = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -27,6 +30,7 @@ class File
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -42,6 +46,18 @@ class File
     public function setPdfname(string $pdfname): static
     {
         $this->pdfname = $pdfname;
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(string $path): static
+    {
+        $this->path = $path;
 
         return $this;
     }

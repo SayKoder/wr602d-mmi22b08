@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\File;
 use App\Service\PdfGeneratorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,14 +62,27 @@ class PdfController extends AbstractController
                 // Générer le PDF via le service
                 $pdf = $this->pdfService->convertUrlToPdf($url);
 
-                // Incrémenter le compteur de PDF de l'utilisateur
+                $filename = 'pdf_' . uniqid() . '.pdf';
+                $filepath = $this->getParameter('pdf_directory') . '/' . $filename;
+
+                file_put_contents($filepath, $pdf);
+
+                // Créer une nouvelle entité File
+                $file = new File();
+                $file->setPdfname($filename);
+                $file->setPath($filepath);
+                $user->addFile($file);
+                $file->addUser($user);
+
+                $this->entityManager->persist($file);
+                $this->entityManager->persist($user);
                 $user->incrementPdfCount();
                 $this->entityManager->flush();
 
                 // Retourner le PDF en réponse HTTP
                 return new Response($pdf, Response::HTTP_OK, [
                     'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'inline; filename="generated.pdf"',
+                    'Content-Disposition' => 'inline; filename="' . $filename . '"',
                 ]);
             }
         }
