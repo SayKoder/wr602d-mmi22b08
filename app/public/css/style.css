@@ -29,9 +29,16 @@ html,body{
 }
 
 body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     background-color: #242424; 
     color: white;
     font-family: 'Merriweather', serif; 
+}
+
+main {
+    flex: 1;
 }
 
 h1{
@@ -78,7 +85,121 @@ p {
     font-family: 'Merriweather', serif;
 }
 
+/* --- PROGRESS BAR --- */
+.progress {
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    margin-top: 10px;
+}
 
+.progress-bar {
+    height: 100%;
+    width: 0;
+    border-radius: 10px;
+    transition: width 0.4s ease-in-out;
+    color: white;
+    font-weight: bold;
+    padding: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-bar.bg-success {
+    background-color: #28a745; /* Green when below max */
+}
+
+.progress-bar.bg-danger {
+    background-color: #ff4500; /* Orange-red when max reached */
+}
+
+.progress-bar.bg-warning {
+    background-color: #ffcc00; /* Yellow warning color for 75% progress */
+}
+
+.progress-bar-text {
+    z-index: 2;
+    font-size: 14px;
+    color: white;
+}
+
+/* --- GENERATION FORM --- */
+#pdfForm {
+    background-color: #2f2f2f;
+    border-radius: 8px;
+    padding: 30px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+#pdfForm input, #pdfForm select, #pdfForm textarea {
+    background-color: #3c3c3c;
+    color: white;
+    border: 1px solid #ee7752;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#pdfForm input:focus, #pdfForm select:focus, #pdfForm textarea:focus {
+    outline: none;
+    border-color: #ff7f50;
+}
+
+/* --- HISTORIQUE --- */
+@media (max-width: 768px) {
+    .table thead {
+        display: none; 
+    }
+    
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+        width: 300px;
+
+        justify-content: center;
+    }
+
+    .table td {
+        display: flex; 
+        justify-content: space-between; 
+        padding: 10px;
+        text-align: left; 
+        border-bottom: 1px solid #ccc; 
+        background-color: #2f2f2f;
+        position: relative;
+    }
+
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+        color: #ee7752;
+    }
+
+    .table td a {
+        text-align: center;
+        background-color: #ee7752;
+        color: white;
+        padding: 5px 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .table td a:hover {
+        background-color: #ff7f50;
+    }
+}
 
 /* --- REGISTRATION FORM --- */
 
@@ -200,6 +321,21 @@ p {
     margin: 10px 0;
 }
 
+.subscription-card .custom-button {
+    background-color: #ee7752;
+    color: white !important;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+.subscription-card .custom-button:hover {
+    background-color: #ff9966;
+    color: black !important;
+}
+
+
+
 /* --- FOOTER --- */
 
 .footer-basic {
@@ -266,7 +402,19 @@ p {
     margin-bottom:0;
   }
 
-/* --- PC ---*/
+
+
+
+
+
+/* --- PC IF CHANGE ---*/
+
+
+
+
+
+
+
 
 /* --- NAVBAR --- */
 
@@ -279,6 +427,29 @@ p {
         max-width: 700px;
         padding: 30px;
     }
+}
+
+/* --- HISTORIQUE --- */
+.table {
+    
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #2f2f2f;
+    color: white;
+}
+
+.table td {
+    background-color: #3c3c3c;
+    color: white;
 }
 
 /* --- FOOTER --- */
