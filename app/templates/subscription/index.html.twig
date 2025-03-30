@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Abonnement{% endblock %}
+
+{% block body %}
+<h1>Abonnement</h1>
+    <div class="subscription-container">
+        {% for subscription in subscriptions %}
+            <div class="subscription-card">
+                <h2>{{ subscription.nom }}</h2>
+                <p>{{ subscription.description }}</p>
+                <p>Prix : {{ subscription.price }} €</p>
+                <p>PDF max par jour : {{ subscription.pdfmax is not null ? subscription.pdfmax : 'Illimité' }}</p>
+                {% if app.user.subscription.id != subscription.id %}
+                    <form action="{{ path('app_change_subscription', {'id': subscription.id}) }}" method="post">
+                        <button type="submit" class="custom-button">Choisir cet abonnement</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,8 +1,9 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\SubscriptionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,23 +18,31 @@ class Subscription
     #[ORM\Column(length: 32, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $pdfmax = null;
 
     #[ORM\Column]
-    private ?int $price = null;
+    private ?float $price = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $special_price = null;
+    private ?float $specialPrice = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $special_price_from = null;
+    private ?\DateTimeInterface $specialPriceFrom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $special_price_to = null;
+    private ?\DateTimeInterface $specialPriceTo = null;
+
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: "subscription")]
+    private Collection $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -57,19 +66,19 @@ class Subscription
         return $this->pdfmax;
     }
 
-    public function setPdfmax(int $pdfmax): static
+    public function setPdfmax(?int $pdfmax): static
     {
         $this->pdfmax = $pdfmax;
 
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
@@ -90,37 +99,42 @@ class Subscription
 
     public function getSpecialPrice(): ?float
     {
-        return $this->special_price;
+        return $this->specialPrice;
     }
 
-    public function setSpecialPrice(?float $special_price): static
+    public function setSpecialPrice(?float $specialPrice): static
     {
-        $this->special_price = $special_price;
+        $this->specialPrice = $specialPrice;
 
         return $this;
     }
 
     public function getSpecialPriceFrom(): ?\DateTimeInterface
     {
-        return $this->special_price_from;
+        return $this->specialPriceFrom;
     }
 
-    public function setSpecialPriceFrom(?\DateTimeInterface $special_price_from): static
+    public function setSpecialPriceFrom(?\DateTimeInterface $specialPriceFrom): static
     {
-        $this->special_price_from = $special_price_from;
+        $this->specialPriceFrom = $specialPriceFrom;
 
         return $this;
     }
 
     public function getSpecialPriceTo(): ?\DateTimeInterface
     {
-        return $this->special_price_to;
+        return $this->specialPriceTo;
     }
 
-    public function setSpecialPriceTo(?\DateTimeInterface $special_price_to): static
+    public function setSpecialPriceTo(?\DateTimeInterface $specialPriceTo): static
     {
-        $this->special_price_to = $special_price_to;
+        $this->specialPriceTo = $specialPriceTo;
 
         return $this;
+    }
+
+    public function getUsers(): Collection
+    {
+        return $this->users;
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
@@ -16,8 +18,20 @@ class File
     #[ORM\Column(length: 255)]
     private ?string $pdfname = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
+
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: "files")]
+    private Collection $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -36,15 +50,48 @@ class File
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getPath(): ?string
     {
-        return $this->created_at;
+        return $this->path;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setPath(string $path): static
     {
-        $this->created_at = $created_at;
+        $this->path = $path;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUsers(): Collection 
+    { 
+        return $this->users; 
+    }
+
+    public function addUser(User $user): static 
+    { 
+        if (!$this->users->contains($user)) 
+        { 
+            $this->users->add($user); 
+        } 
+        
+        return $this; 
+    }
+
+    public function removeUser(User $user): static 
+    { 
+        $this->users->removeElement($user); 
+        return $this; 
     }
 }
