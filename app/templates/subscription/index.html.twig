@@ -13,7 +13,7 @@
                 <p>PDF max par jour : {{ subscription.pdfmax is not null ? subscription.pdfmax : 'Illimité' }}</p>
                 {% if app.user.subscription.id != subscription.id %}
                     <form action="{{ path('app_change_subscription', {'id': subscription.id}) }}" method="post">
-                        <button type="submit" class="btn">Choisir cet abonnement</button>
+                        <button type="submit" class="custom-button">Choisir cet abonnement</button>
                     </form>
                 {% endif %}
             </div>

@@ -17,10 +17,12 @@
             <tbody>
                 {% for file in files %}
                     <tr>
-                        <td>{{ file.pdfname }}</td>
-                        <td>{{ file.createdAt|date('d/m/Y H:i') }}</td>
-                        <td>
+                        <td data-label="Nom du fichier">{{ file.pdfname }}</td>
+                        <td data-label="Date de génération">{{ file.createdAt|date('d/m/Y H:i') }}</td>
+                        <td data-label="Télécharger">
                            <a href="{{ asset('uploads/pdf/' ~ file.pdfname) }}" class="btn btn-primary" target="_blank">Télécharger</a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
